@@ -55,3 +55,54 @@ variable "database_subnet_cidr" {
   type = list
   default = ["10.0.21.0/24", "10.0.22.0/24"]
 }
+
+variable "sg_name" {
+  type = string
+  default = "Allow-all"
+}
+
+variable "sg_description" {
+  type = string
+  default = "allowing all"
+}
+
+variable "ingress" {
+  type = list
+  default = [
+    {
+        description = "Allow https from internet"
+        to_port = 443
+        from_port = 443
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
+        description = "Allow shh from my ip"
+        to_port = 22
+        from_port = 22
+        protocol = "tcp"
+        cidr_blocks = ["136.226.242.114/32"]
+    }
+  ]
+}
+
+variable "instances" {
+  type = map
+  default = {
+    web = "t2.micro"
+    mongodb = "t3.medium"
+    mysql = "t3.medium"
+    redis = "t2.micro"
+    rabbitmq = "t2.micro"
+    catalogue = "t2.micro"
+    cart = "t2.micro"
+    user = "t2.micro"
+    payment = "t2.micro"
+    shipping = "t2.micro"
+  }
+}
+
+variable "zone_name" {
+  type = string
+  default = "sureshvadde.online"
+}
